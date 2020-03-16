@@ -1,5 +1,6 @@
-*.exe
-*.out
+*
+!*.*
+!*/
 
+.gitignore
 .DS_Store*
-Thumbs.db
