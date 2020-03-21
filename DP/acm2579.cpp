@@ -15,27 +15,11 @@ int main()
 	for (int i = 1; i <= n; i++)
 		scanf("%d", &floors[i]);
 
-	printf("%d\n", step(0, 0));
+	dp[1] = floors[1];
+	dp[2] = floors[1] + floors[2];
+	for (int i = 3; i <= n; i++)
+		dp[i] = max(dp[i-2], dp[i-3] + floors[i-1]) + floors[i];
+
+	printf("%d\n", dp[n]);
 	return 0;
-}
-
-int step(int f, int c)
-{
-	// int score = 0;
-	if (f == n) return floors[n];
-	if (c != 2) {
-		if (!dp[f+1])
-			dp[f] = step(f+1, c+1);
-		else
-			dp[f] = dp[f+1];
-	}
-
-	if (f+2 > n) return 0;
-	if (f+2 <= n && !dp[f+2])
-		dp[f] = max(dp[f], step(f+2, 1));
-	else
-		dp[f] = max(dp[f], dp[f+2]);
-
-	// printf("%d-> %d\n", floor, score);
-	return dp[f] + floors[f];
 }
