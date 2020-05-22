@@ -8,11 +8,10 @@ using namespace std;
 
 int t, n;
 vector<pair<int,int>> pos;
-bool visited[105], flag;
+bool visited[105][105];
 
 bool isReachable(int p1, int p2);
-void dfs(int p);
-
+void floyd();
 
 int main()
 {
@@ -20,7 +19,6 @@ int main()
     int x, y;
     scanf("%d", &t);
     while (t--) {
-        flag = false;
         pos.clear();
         memset(visited, false, sizeof(visited));
         scanf("%d", &n);
@@ -29,8 +27,18 @@ int main()
             pos.push_back(make_pair(x, y));
         }
 
-        dfs(0);
-        if (flag)
+        for (int i = 0; i < n+2; i++) {
+            for (int j = 0; j < n+2; j++) {
+                if (i == j) continue;
+                else {
+                    if (isReachable(i, j))
+                        visited[i][j] = true;
+                }
+            }
+        }
+
+        floyd();
+        if (visited[0][n+1])
             printf("happy\n");
         else
             printf("sad\n");
@@ -49,16 +57,15 @@ bool isReachable(int p1, int p2)
     return true;
 }
 
-void dfs(int p)
+void floyd()
 {
-    if (flag || isReachable(p, n+1)) {
-        flag = true;
-        return;
-    }
-    visited[p] = true;
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i] && isReachable(p, i)) {
-            dfs(i);
+    for (int i = 0; i < n+2; i++) {
+        for (int j = 0; j < n+2; j++) {
+            for (int k = 0; k < n+2; k++) {
+                if (i == j || j == k || i == k) continue;
+                if (visited[j][i] && visited[i][k])
+                    visited[j][k] = true;
+            }
         }
     }
 }
