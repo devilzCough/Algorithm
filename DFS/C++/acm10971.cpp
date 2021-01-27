@@ -16,17 +16,17 @@ int main()
         for (int j = 1; j <= n; j++)
             scanf("%d", &g[i][j]);
 
-    int min_p = 10000000;
+    int min_p = 100000000;
     for (s = 1; s <= n; s++)
         min_p = min(min_p, dfs(s));
-        
+
     printf("%d\n", min_p);
     return 0;
 }
 
 int dfs(int c)
 {
-    int fee = 10000000;
+    int fee = 100000000;
     visited[c] = 1;
     visited[0]++;
     if (visited[0] == n && g[c][s])
