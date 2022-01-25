@@ -13,7 +13,7 @@ using namespace std;
 
 int N, K;
 bool visited[100001];
-queue < pair<int, int> > q;
+queue<pair<int, int>> q;
 
 void solve();
 
